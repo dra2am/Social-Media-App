@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { HYDRATE } from "next-redux-wrapper";
 
+//stores profile information
 const userData = (profile = {}, action) => {
   switch (action.type) {
     case HYDRATE:
@@ -23,6 +24,19 @@ const userData = (profile = {}, action) => {
   }
 };
 
+//authenticates user after good request
+const isAuth = (auth = false, action) => {
+  if (action.type === "AUTH_USER") {
+    //if action is of valid type, return true
+    return (auth = true);
+  } else if (action.type === "LOGOUT") {
+    return (auth = false);
+  }
+  //otherwise state remains unchanged
+  return auth;
+};
+
 export const allReducers = combineReducers({
   userData,
+  isAuth,
 });

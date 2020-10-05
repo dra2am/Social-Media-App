@@ -15,3 +15,15 @@ export const userDataClient = (user) => {
     },
   };
 };
+
+export const authUser = () => {
+  return {
+    type: "AUTH_USER",
+  };
+};
+
+export const logout = () => {
+  return {
+    type: "LOGOUT",
+  };
+};

@@ -1,20 +1,26 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { useStore } from "react-redux";
+import { authUser } from "../../redux-files/actions";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+
 import Profile from "../../components/profile";
 
 export default function UserProfile() {
-  //set up router
-  const router = useRouter();
-  //fetch the user from store
+  //get state from store, set up router
   const store = useStore();
   const state = store.getState();
+  const router = useRouter();
 
-  //upon loading page, check for user
-  //no user = back to login
+  //check for token, if there, auth user:
   useEffect(() => {
-    if (!state.userData.hasOwnProperty("server")) {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      store.dispatch(authUser());
+      console.log("token is valid", state.isAuth);
+    } else {
       router.push("/");
+      console.log("token is invalid", state.isAuth);
+      return;
     }
   }, []);
 

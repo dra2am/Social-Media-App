@@ -4,10 +4,10 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useStore } from "react-redux";
-import { userDataServer } from "../redux-files/actions/index";
+import { authUser } from "../redux-files/actions/index";
 import styles from "../styles/Home.module.css";
 
-const Login = ({ state }) => {
+const Login = () => {
   //redirect user
   const router = useRouter();
 
@@ -38,7 +38,11 @@ const Login = ({ state }) => {
         password: password,
       })
       .then((res) => {
-        store.dispatch(userDataServer(res.data.user));
+        //store token in local storage
+        window.localStorage.setItem("token", res.data.token);
+        //authenticate user
+        store.dispatch(authUser());
+        //redirect to profile page
         router.push("/user/profile");
       })
       .catch((err) => {
@@ -46,11 +50,11 @@ const Login = ({ state }) => {
       });
   };
 
-  // //for a faster transition
-  // useEffect(() => {
-  //   // Prefetch the dashboard page as the user will go there after the login
-  //   router.prefetch("/user/profile");
-  // }, []);
+  //for a faster transition
+  useEffect(() => {
+    // Prefetch the dashboard page as the user will go there after the login
+    router.prefetch("/user/profile");
+  }, []);
 
   return (
     <div className={styles.container}>
