@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useStore } from "react-redux";
-import { userDataServer } from "../redux-files/actions";
+import { authUser } from "../redux-files/actions";
 
 const SignUp = () => {
   //store the state of inputs
@@ -37,8 +37,11 @@ const SignUp = () => {
         name: name,
       })
       .then((res) => {
-        //store user data in redux store
-        store.dispatch(userDataServer(res.data.user));
+        //store token in local storage
+        window.localStorage.setItem("token", res.data.token);
+        //authenticate user
+        store.dispatch(authUser());
+        //redirect to profile page
         router.push("/user/profile");
       })
       .catch((e) => {

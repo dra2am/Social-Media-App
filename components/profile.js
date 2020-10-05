@@ -24,7 +24,7 @@ export default function Profile() {
           },
         })
         .then((res) => {
-          // store.dispatch(userDataServer(res.data));
+          //set information to state
           setEmail(res.data.email);
           setName(res.data.name);
           console.log(state);
@@ -40,10 +40,17 @@ export default function Profile() {
     fetchData();
   }, []);
 
+  //this function removes user token and pushes them back to login page
+  function logout() {
+    localStorage.removeItem("token");
+    router.push("/");
+  }
+
   //displays loading or profile depending on availability of data
   if (state.isAuth === true && name && email) {
     return (
       <div>
+        <button onClick={logout}>Logout</button>
         <h2>Profile</h2>
         <p>Email: {email} </p>
         <p>Name: {name} </p>
