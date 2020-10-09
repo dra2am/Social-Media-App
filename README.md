@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+This project is a work in progress and contains the inital stages of a social media app. Currently a user can log into, log out of, and create an account. 
+
 ## Getting Started
 
 First, run the development server:
