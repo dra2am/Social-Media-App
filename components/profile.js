@@ -15,6 +15,7 @@ export default function Profile() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
 
+  //upon loading page, attempt to request user data
   useEffect(() => {
     async function fetchData() {
       await axios
@@ -49,11 +50,22 @@ export default function Profile() {
   //displays loading or profile depending on availability of data
   if (state.isAuth === true && name && email) {
     return (
-      <div>
-        <button onClick={logout}>Logout</button>
-        <h2>Profile</h2>
-        <p>Email: {email} </p>
-        <p>Name: {name} </p>
+      <div className="w-screen">
+        {/* top section of page */}
+        <section className="heading border-b pb-3 bg-gray-200">
+          <span className="font-bold text-lg mr-1">Home</span> 
+          <div className="w-11/12 inline-flex justify-end">
+            <button className="mt-3 mr-1 text-lg font-bold text-blue-400 hover:text-blue-700" onClick={logout}>Logout</button>
+          </div>
+        </section>
+        {/* user display */}
+        <section className="user-display flex mt-5">
+          <img src="/woman.png" className="w-20 h-20 "/>
+          <div className="user-info mt-3">
+            <p>Email: {email} </p>
+            <p>Name: {name} </p>
+          </div>
+        </section>
       </div>
     );
   } else {

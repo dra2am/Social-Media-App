@@ -50,32 +50,36 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={onFormSubmit}>
+    <div className="flex items-center justify-center h-screen">
+      <form className="border rounded p-10 bg-gray-200" onSubmit={onFormSubmit}>
+      <h1 className="font-bold text-3xl text-center ">Sign Up</h1>
         <input
+          className="block m-3 p-1"
           required
           type='email'
           placeholder='email'
           onChange={onEmailChange}
         ></input>
         <input
+          className="m-3 p-1 block"
           required
           type='password'
           placeholder='password'
           onChange={onPassChange}
         ></input>
         <input
+          className=" m-3 p-1 block"
           required
           type='text'
           placeholder='name'
           onChange={onNameChange}
         ></input>
-        <button type='submit'>Create Account</button>
+        <button className="block m-3 mx-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type='submit'>Create Account</button>
+      <Link href='/'>
+        <a className="m-3 text-blue-500 hover:text-blue-700">Back to login</a>
+      </Link>
       </form>
 
-      <Link href='/'>
-        <a>Back to home</a>
-      </Link>
     </div>
   );
 };
