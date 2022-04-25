@@ -1,7 +1,7 @@
 //will lock certain operations/routes behind authentication
 //tokens will be used for auth
 const jwt = require("jsonwebtoken");
-const User = require("../models/userModel");
+const User = require("../models/Users");
 
 const auth = async (req, res, next) => {
   try {

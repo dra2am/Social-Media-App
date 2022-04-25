@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "../styles/global.scss";
 import React from "react";
 import { wrapper } from "../redux-files/store";
 

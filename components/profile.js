@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useStore } from "react-redux";
 import { useEffect, useState } from "react";

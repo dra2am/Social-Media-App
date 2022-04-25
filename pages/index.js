@@ -1,5 +1,5 @@
-import Login from "../components/login";
+import { HomeNav } from "../components/HomeNav"
 
 export default function Home() {
-  return <Login></Login>;
+  return <HomeNav/>;
 }

@@ -4,7 +4,7 @@ require("./database/db");
 const userRouter = require("./routers/userRouter");
 
 const app = express();
-const port = process.env.port || 3001;
+const port = process.env.port || 3002;
 
 //use CORS
 app.use(cors());

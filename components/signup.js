@@ -9,7 +9,6 @@ const SignUp = () => {
   //store the state of inputs
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [name, setName] = useState("");
 
   //use redux store and next router
   const store = useStore();
@@ -22,19 +21,15 @@ const SignUp = () => {
   const onPassChange = (event) => {
     setPass(event.target.value);
   };
-  const onNameChange = (event) => {
-    setName(event.target.value);
-  };
 
   //upon submission, attempt to post user to server
   const onFormSubmit = async (event) => {
     event.preventDefault();
 
     await axios
-      .post("http://localhost:3001/users/signup", {
+      .post("http://localhost:3002/users/signup", {
         email: email,
         password: pass,
-        name: name,
       })
       .then((res) => {
         //store token in local storage
@@ -66,13 +61,6 @@ const SignUp = () => {
           type='password'
           placeholder='password'
           onChange={onPassChange}
-        ></input>
-        <input
-          className=" m-3 p-1 block"
-          required
-          type='text'
-          placeholder='name'
-          onChange={onNameChange}
         ></input>
         <button className="block m-3 mx-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type='submit'>Create Account</button>
       <Link href='/'>
