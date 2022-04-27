@@ -11,7 +11,7 @@ const Product = ({ name, img, price, id }) => {
     }
 
     return (
-        <Card style={{ borderWidth: 0 }} onClick={handleClick}>
+        <Card style={{ borderWidth: 0 }} onClick={handleClick} className="product mb-4">
             <Card.Img variant="top" src={img} />
             <Card.Body>
                 <Card.Title>{name}</Card.Title>
