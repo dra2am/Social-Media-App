@@ -1,28 +1,46 @@
-const sql = require('../database/db');
+const Database = require('../database/db');
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require("bcryptjs");
 
 const id = uuidv4(); 
 
 class User {
-  constructor({ email, password }) {
+
+  constructor({ email, password }) 
+  {
     this.email = email;
     this.password = password;
+    this.error = '';
+    this.token = '';
+  }
 
-    this.addUser = () => {
-      sql.execute(
+  //creates hashed password
+  hashPassword = async() => {
+    const hashedPass = await bcrypt.hash(this.password, 8);
 
-        'INSERT INTO user_credentials VALUES (?, ?, ?); ', [id, this.email, this.password],
+    this.password = hashedPass;
+  }
 
-        (err, results) => {
-          if (err) {
-            throw err.sqlMessage;
-          }
+  //adds user with provided data
+  addUser = async() => {
 
-          return results;
-        }
-      );
-    };
+    const sql = new Database();
 
+    try {
+      await this.hashPassword();
+      
+      await sql.insertUser(id, this.email, this.password)
+
+      console.log("User -- insertUser success")
+    } catch (error) {
+      console.log("error -- User")
+      console.log(error);
+    }
+  };
+
+  findUser=async()=>{
+    //compare hashed pass with inserted pass
+    //if so allow auth
   }
 }
 

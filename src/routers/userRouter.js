@@ -5,17 +5,32 @@ const User = require('../models/User')
 
 //create user
 router.post("/users/signup", async (req, res) =>{
-  //create a new user based on req.body
-  //will need to sanitize data since sql
-  const user = new User(req.body);
 
   try {
+    //create a new user based on req.body
+    const user = new User(req.body);
+
     await user.addUser()
     res.status(201).send();
-    
-  } catch (error) {
-    console.log("Error:...");
-    res.status(400).send("Error:..."+error);
+    console.log("added user -- success")
+
+  } catch (e) {
+    console.log("error -- unable to add user")
+    res.status(400).send(e);
+  }
+});
+
+//login user
+router.post("/users/login", async (req, res) => {
+  try {
+    //find user
+  
+    //make token and add to token arr
+    // const token = await user.generateToken();
+    // // res.send({ user, token });
+    // res.send({ token });
+  } catch (e) {
+    res.status(400).send();
   }
 });
 
