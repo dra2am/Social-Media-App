@@ -33,7 +33,7 @@ const Login = () => {
 
     // make req to server
     await axios
-      .post("http://localhost:3001/users/login", {
+      .post("http://localhost:3002/users/login", {
         email: username,
         password: password,
       })

@@ -6,7 +6,7 @@ const id = uuidv4();
 
 class User {
 
-  constructor({ email, password }) 
+  constructor({ email ='', password='' }) 
   {
     this.email = email;
     this.password = password;
@@ -39,8 +39,30 @@ class User {
   };
 
   findUser=async()=>{
-    //compare hashed pass with inserted pass
-    //if so allow auth
+    //compare hashed pass with inserted pass, if so allow auth
+    try {
+      console.log("findUser -- called")
+
+      const sql = new Database();
+
+      const result = await sql.getUser(this.email)
+      //object containing rows
+      if(result[0][0])
+      {
+        const pass = result[0][0].passwords
+        if (!await bcrypt.compare(this.password, pass))
+        {
+          throw new Error("Unable to login")
+        }
+  
+        return true;
+      }
+
+      throw new Error("Unable to login -- user not found");
+
+    } catch (error) {
+      console.log("Error at Users.js: "+error)
+    }
   }
 }
 

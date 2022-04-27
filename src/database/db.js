@@ -55,6 +55,18 @@ class Database
   } 
 
   //find user by username, retrieve hashed pass
+  getUser = async(email) =>
+  {
+    console.log("getUser -- db")
+
+    try {
+
+     return (await this.createConnection).execute('SELECT id, email, passwords FROM user_credentials where email=?;', [email])
+     
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 const db = new Database();

@@ -24,13 +24,15 @@ router.post("/users/signup", async (req, res) =>{
 router.post("/users/login", async (req, res) => {
   try {
     //find user
-  
-    //make token and add to token arr
-    // const token = await user.generateToken();
-    // // res.send({ user, token });
-    // res.send({ token });
+    const user = new User(req.body)
+     
+    if (user.findUser() === true)
+    {
+      res.send({auth: true})
+    }
+    res.send({auth: false})
   } catch (e) {
-    res.status(400).send();
+    res.status(400).send({auth: false});
   }
 });
 
