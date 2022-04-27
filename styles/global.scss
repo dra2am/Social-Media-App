@@ -1,2 +1,17 @@
-@import "~bootstrap";
+$primary: #e48176;
+
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import url('https://fonts.googleapis.com/css2?family=Ms+Madi&display=swap');
+
+.title {
+    font-family: 'Ms Madi', cursive;
+    font-size: 2.5rem;
+}
+å
+.product {
+    &:hover {
+        box-shadow: 5px 5px 8px $gray-300;
+        cursor: pointer;
+    }
+}
 
