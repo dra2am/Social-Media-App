@@ -8,8 +8,8 @@ const Products = () => {
             <Row md={4}>
                 {products.map(product => {
                     return (
-                        <Col>
-                            <Product {...product} key={product.id} />
+                        <Col key={product.id}>
+                            <Product {...product} />
                         </Col>
                     )
                 })}

@@ -1,6 +1,30 @@
 import { combineReducers } from "redux";
 import { HYDRATE } from "next-redux-wrapper";
 
+const message = (message = "", action) => {
+  if (action.type === "DISPLAY_MESSAGE") {
+      return action.payload;
+    }
+  return message;
+}
+
+const cart = (cart = {}, action) => {
+  switch (action.type) {
+    case "ADD_TO_CART": {
+      const { id, qty } = action.payload;
+      return {...cart, id: { id, qty }};
+    }
+    case "DELETE_FROM_CART": {
+      const id = action.payload;
+      const arr = cart;
+      delete arr[id]
+      return arr;
+    }
+    default: 
+      return cart;
+  }
+}
+
 //stores profile information
 const userData = (profile = {}, action) => {
   switch (action.type) {
@@ -39,4 +63,6 @@ const isAuth = (auth = false, action) => {
 export const allReducers = combineReducers({
   userData,
   isAuth,
+  cart, 
+  message
 });
