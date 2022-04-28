@@ -11,31 +11,36 @@ import product_9 from "../public/product-9.jpg";
 const products = [
     {   
         id: 1,
-        name: "Super Conditioning Conditioner",
+        name: "Shampoo & Conditioner Set",
+        description: "Luxurious shampoo & conditioner set will leave your hair silky smooth.",
         img: product_1,
-        price: "19.00"
+        price: "21.00"
     },
     {
         id: 2, 
-        name: "Fantabulous Shampoo",
+        name: "Rejuvenating Hair Mask",
+        description: "Ideal for dry, damaged hair.",
         img: product_2,
         price: "10.99"
     },
     {
         id: 3,
-        name: "Super-duper Leave-in Conditioner",
+        name: "Argan Oil",
+        description: "High-quality oil, great for sealing in moisture.",
         img: product_3,
         price: "14.50"
     },
     {
         id: 4,
-        name: "Thirsty Girl Hair Mask",
+        name: "Hair Pommade",
+        description: "This pommade will deliver moisture and hold.",
         img: product_4,
         price: "34.60"
     },
     {   
         id: 5,
-        name: "Super Conditioning Conditioner",
+        name: "Cleansing Shampoo",
+        description: "Our Cleansing Shampoo will gently lift oil and dirt for maximum shine.",
         img: product_5,
         price: "19.00"
     },
@@ -47,19 +52,22 @@ const products = [
     },
     {
         id: 7,
-        name: "Super-duper Leave-in Conditioner",
+        name: "Multi-use Butter",
+        description: "This multi-use butter is ideal for both hair and body.",
         img: product_7,       
         price: "14.50"
     },
     {
         id: 8,
-        name: "Thirsty Girl Hair Mask",
+        name: "Maui Moisture Bamboo Shampoo",
+        description: "This shampoo is ideal for weak, brittle hair. It will revive and strengthen your hair.",
         img: product_8,          
         price: "34.60"
     },
     {
-        id: 8,
-        name: "Thirsty Girl Hair Mask",
+        id: 9,
+        name: "Angel.Wash Shampoo",
+        description: "This Angel.Wash shampoo is ideal for color-treated, damaged hair.",
         img: product_9,         
         price: "34.60"
     },

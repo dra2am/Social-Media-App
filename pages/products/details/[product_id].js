@@ -11,6 +11,7 @@ const details = () => {
     const product = products.find(product => product.id === +product_id);
 
     if (product) {
+        const { img, name, description, price } = product;
         return (
             <>
                 <TopNav />
@@ -19,18 +20,23 @@ const details = () => {
                     <Row className="mt-5">
                         <Col xs={4}>
                             <div style={{width: '100%', height: "500px", position: 'relative'}}>
-                                <Image variant="top" src={product.img} alt={product.name} layout="fill" objectFit="cover" className="card-img-top img-responsive"/>
+                                <Image variant="top" src={img} alt={name} layout="fill" objectFit="cover" className="card-img-top img-responsive"/>
                             </div>                    
                         </Col>
                         <Col xs={8}>   
                             <Row>
                                 <Col>
                                     <h1>
-                                        {product.name}
+                                        {name}
                                     </h1>
                                     <h4 className="text-muted">
-                                        ${product.price}
+                                        ${price}
                                     </h4>
+                                </Col>
+                            </Row>
+                            <Row className="my-4">
+                                <Col>
+                                    <p>{description}</p>
                                 </Col>
                             </Row>
                             <Row>
