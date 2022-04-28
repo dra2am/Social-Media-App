@@ -37,20 +37,10 @@ class Database
   {
     try {
 
-      (await this.createConnection).execute('INSERT INTO user_credentials VALUES (?, ?, ?);', 
-   
-      [id, email, password],
-      
-      (err)=>{
-        throw err; 
-      }
-      );
-
-      console.log("insertUser -- success")
+      return (await this.createConnection).execute('INSERT INTO user_credentials VALUES (?, ?, ?);', [id, email, password]);
   
     } catch (error) {
-      console.log("insertUser -- error")
-      console.log(error)
+      console.log("insertUser -- error: "+error)
     }
   } 
 

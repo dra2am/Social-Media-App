@@ -10,12 +10,16 @@ router.post("/users/signup", async (req, res) =>{
     //create a new user based on req.body
     const user = new User(req.body);
 
-    await user.addUser()
-    res.status(201).send();
-    console.log("added user -- success")
+    if (await user.addUser() === true)
+    {
+      res.status(201).send("User created");
+      console.log("added user -- success")
+    }
+
+    res.status(200).send("This user exists")
 
   } catch (e) {
-    console.log("error -- unable to add user")
+    console.log("error -- an error occurred")
     res.status(400).send(e);
   }
 });
@@ -26,7 +30,7 @@ router.post("/users/login", async (req, res) => {
     //find user
     const user = new User(req.body)
      
-    if (user.findUser() === true)
+    if (await user.findUser() === true)
     {
       res.send({auth: true})
     }

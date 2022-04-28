@@ -29,12 +29,17 @@ class User {
     try {
       await this.hashPassword();
       
-      await sql.insertUser(id, this.email, this.password)
+      const result = await sql.insertUser(id, this.email, this.password)
 
-      console.log("User -- insertUser success")
+      if(!result[0])
+      {
+        throw new Error("addUser -- unable to add user")
+      }
+
+      return true;
+      
     } catch (error) {
-      console.log("error -- User")
-      console.log(error);
+      console.log("Error -- User: "+error);
     }
   };
 
