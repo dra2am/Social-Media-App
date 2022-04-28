@@ -1,6 +1,7 @@
 const Database = require('../database/db');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const id = uuidv4(); 
 
@@ -10,8 +11,16 @@ class User {
   {
     this.email = email;
     this.password = password;
-    this.error = '';
     this.token = '';
+  }
+
+  //generates a jwt
+  generateToken = () => {
+
+    const token = jwt.sign({ _id: id.toString() }, "token");
+
+    return token;
+
   }
 
   //creates hashed password
@@ -27,9 +36,11 @@ class User {
     const sql = new Database();
 
     try {
+      this.token = this.generateToken()
+
       await this.hashPassword();
       
-      const result = await sql.insertUser(id, this.email, this.password)
+      const result = await sql.insertUser(id, this.email, this.password, this.token)
 
       if(!result[0])
       {
@@ -54,6 +65,7 @@ class User {
       //object containing rows
       if(result[0][0])
       {
+        this.token = result[0][0].token
         const pass = result[0][0].passwords
         if (!await bcrypt.compare(this.password, pass))
         {

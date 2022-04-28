@@ -33,11 +33,11 @@ class Database
   }
 
   //insert user into table
-  insertUser=async(id, email, password)=>
+  insertUser=async(id, email, password, token)=>
   {
     try {
 
-      return (await this.createConnection).execute('INSERT INTO user_credentials VALUES (?, ?, ?);', [id, email, password]);
+      return (await this.createConnection).execute('INSERT INTO user_credentials VALUES (?, ?, ?, ?);', [id, email, password, token]);
   
     } catch (error) {
       console.log("insertUser -- error: "+error)
@@ -51,7 +51,7 @@ class Database
 
     try {
 
-     return (await this.createConnection).execute('SELECT id, email, passwords FROM user_credentials where email=?;', [email])
+     return (await this.createConnection).execute('SELECT id, email, passwords, token FROM user_credentials where email=?;', [email])
      
     } catch (error) {
       console.log(error)

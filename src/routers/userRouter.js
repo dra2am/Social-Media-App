@@ -12,14 +12,14 @@ router.post("/users/signup", async (req, res) =>{
 
     if (await user.addUser() === true)
     {
-      res.status(201).send("User created");
+      res.status(201).send({token: user.token});
       console.log("added user -- success")
+    } else {
+
+      throw new Error("This user exists")
     }
 
-    res.status(200).send("This user exists")
-
   } catch (e) {
-    console.log("error -- an error occurred")
     res.status(400).send(e);
   }
 });
@@ -32,49 +32,15 @@ router.post("/users/login", async (req, res) => {
      
     if (await user.findUser() === true)
     {
-      res.send({auth: true})
+      res.send({token: user.token})
+
+    } else {
+      
+      res.send({auth: false})
     }
-    res.send({auth: false})
   } catch (e) {
     res.status(400).send({auth: false});
   }
 });
-
-// router.post("/users/signup", async (req, res) => {
-//   //create a user based on req.body
-//   const user = new Users(req.body);
-//   try {
-//     //check if user is valid according to schema, make+add token
-//     await user.save();
-//     const token = await user.generateToken();
-//     // res.status(201).send({ user, token });
-//     res.status(201).send({ token });
-//   } catch (e) {
-//     res.status(400).send(e);
-//   }
-// });
-
-//login user
-// router.post("/users/login", async (req, res) => {
-//   try {
-//     //find user
-//     const user = await Users.findByCredentials(
-//       req.body.email,
-//       req.body.password
-//     );
-//     //make token and add to token arr
-//     const token = await user.generateToken();
-//     // res.send({ user, token });
-//     res.send({ token });
-//   } catch (e) {
-//     res.status(400).send();
-//   }
-// });
-
-//get user profile
-// router.get("/users/profile", auth, async (req, res) => {
-//   //after auth token, returns user profile
-//   res.send(req.user);
-// });
 
 module.exports = router;
