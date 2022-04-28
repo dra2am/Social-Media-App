@@ -1,5 +1,6 @@
 import React from 'react';
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import Link from "next/link"
 
 const TopNav = () => {
   return (
@@ -9,8 +10,10 @@ const TopNav = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">Products</Nav.Link>
-            <Nav.Link href="/cart">Cart</Nav.Link>
+            <li className="nav-item">
+              <Link href="/"><a className="nav-link">Products</a></Link>
+            </li>
+            <Link href="/cart"><a className="nav-link">Cart</a></Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
