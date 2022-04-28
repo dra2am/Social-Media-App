@@ -15,6 +15,8 @@ function details() {
     const { product_id } = router.query;
     const product = products.find(product => product.id === +product_id);
     const msg = useSelector(state => state.message);  
+    const cart = useSelector(state => state.cart);  
+    console.log("cart", cart)
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -25,7 +27,7 @@ function details() {
         dispatch({ 
             type: "ADD_TO_CART", 
             payload: {
-                id: product.id,
+                name: product.name,
                 qty
             }
         })

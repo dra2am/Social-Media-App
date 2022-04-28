@@ -8,16 +8,15 @@ const message = (message = "", action) => {
   return message;
 }
 
-const cart = (cart = {}, action) => {
+const cart = (cart = [], action) => {
   switch (action.type) {
     case "ADD_TO_CART": {
-      const { id, qty } = action.payload;
-      return {...cart, id: { id, qty }};
+      const { name, qty } = action.payload;
+      return [...cart, {name, qty}];
     }
     case "DELETE_FROM_CART": {
-      const id = action.payload;
-      const arr = cart;
-      delete arr[id]
+      const name = action.payload;
+      const arr = cart.filter(product => product.name !== name);
       return arr;
     }
     default: 
