@@ -43,7 +43,7 @@ const Login = () => {
         window.localStorage.setItem("token", res.data.token);
         //authenticate user
         store.dispatch(authUser());
-        //redirect to profile page
+        //redirect to products page
         router.push("/products");
       })
       .catch((err) => {
