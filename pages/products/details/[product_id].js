@@ -16,8 +16,8 @@ const details = () => {
             <>
                 <TopNav />
                 <Container>
-                    <Button variant="link">Back to Products</Button>
-                    <Row className="mt-5">
+                    <Button variant="link" href="/">Back to Products</Button>
+                    <Row className="mt-4">
                         <Col xs={4}>
                             <div style={{width: '100%', height: "500px", position: 'relative'}}>
                                 <Image variant="top" src={img} alt={name} layout="fill" objectFit="cover" className="card-img-top img-responsive"/>
