@@ -22,6 +22,7 @@ const Login = () => {
   const onUsernameChange = (event) => {
     setUsername(event.target.value);
   };
+
   //get input from password
   const onPassChange = (event) => {
     setPassword(event.target.value);
@@ -43,7 +44,7 @@ const Login = () => {
         //authenticate user
         store.dispatch(authUser());
         //redirect to profile page
-        router.push("/user/profile");
+        router.push("/products");
       })
       .catch((err) => {
         console.log(err);
@@ -53,7 +54,7 @@ const Login = () => {
   //for a faster transition
   useEffect(() => {
     // Prefetch the dashboard page as the user will go there after the login
-    router.prefetch("/user/profile");
+    router.prefetch("/products");
   }, []);
 
   return (
