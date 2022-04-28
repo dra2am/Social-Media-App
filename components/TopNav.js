@@ -5,11 +5,11 @@ const TopNav = () => {
   return (
     <Navbar bg="primary" variant="dark" expand="lg" className="mb-4">
       <Container>
-        <Navbar.Brand href="#home" className="title">All Curls</Navbar.Brand>
+        <Navbar.Brand href="/" className="title">All Curls</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#products">Products</Nav.Link>
+            <Nav.Link href="/">Products</Nav.Link>
             <Nav.Link href="#link">Link</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
