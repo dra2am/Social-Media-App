@@ -1,11 +1,11 @@
 import { Container, Row, Col } from "react-bootstrap";
 import Product from "../../components/products/product";
-import products from "./data"
+import products from "../data"
 
 const Products = () => {
     return (
         <Container>
-            <Row md={5}>
+            <Row md={4}>
                 {products.map(product => {
                     return (
                         <Col>
