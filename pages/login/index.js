@@ -4,7 +4,10 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useStore } from "react-redux";
-import { authUser } from "../redux-files/actions/index";
+import { authUser } from "../../redux-files/actions/index";
+import { Container, Button } from 'react-bootstrap';
+import TopNav from "../../components/TopNav";
+
 // import styles from "../styles/Home.module.css";
 
 const Login = () => {
@@ -34,7 +37,7 @@ const Login = () => {
 
     // make req to server
     await axios
-      .post("http://localhost:3001/users/login", {
+      .post("http://localhost:3002/users/login", {
         email: username,
         password: password,
       })
@@ -44,7 +47,7 @@ const Login = () => {
         //authenticate user
         store.dispatch(authUser());
         //redirect to products page
-        router.push("/products");
+        router.push("/");
       })
       .catch((err) => {
         console.log(err);
@@ -53,48 +56,50 @@ const Login = () => {
 
   //for a faster transition
   useEffect(() => {
-    // Prefetch the dashboard page as the user will go there after the login
-    router.prefetch("/products");
+    // Prefetch the page as the user will go there after the login
+    router.prefetch("/");
   }, []);
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <>
       <Head>
-        <title>InstaClone Sign in</title>
-        {/* change this icon */}
-        <link rel='icon' href='/favicon.ico' />
+        <title> Sign in</title>
       </Head>
 
-      <div className='signup justify-center border rounded p-10 bg-gray-200' onSubmit={onFormSubmit}>
+    <TopNav/>
+    <Container>
+    <div className="text-center" onSubmit={onFormSubmit}>
       <h1 className="font-bold text-3xl text-center ">Log In</h1>
         <form>
           <input
-            className="block m-3 p-1"
+            className="m-3 p-1"
             type='email'
             required
             placeholder='username or email'
             onChange={onUsernameChange}
           ></input>
           <input
-          className="block m-3 p-1"
+          className="m-3 p-1"
             type='password'
             required
             placeholder='password'
             onChange={onPassChange}
           ></input>
-          <button type='submit' className="mx-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Log In</button>
+          <Button type="submit" variant="primary">Login</Button>
         </form>
 
         <div className='create-acc m-3'>
           <p>
             Don't have an account?{" "}<br></br>
-            <Link href='/user/register'>
-              <a className="text-blue-500 hover:text-blue-700">Sign up</a>
+            <Link href='/signup'>
+              <Button className="m-3" variant="outline-primary">Sign up</Button>
             </Link>
           </p>
         </div>
       </div>
-    </div>
+    </Container>
+  
+    </>
   );
 };
 

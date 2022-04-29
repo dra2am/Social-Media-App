@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useStore } from "react-redux";
-import { authUser } from "../redux-files/actions";
+import { authUser } from "../../redux-files/actions";
+import { Container, Button } from 'react-bootstrap';
+import TopNav from "../../components/TopNav";
 
 const SignUp = () => {
   //store the state of inputs
@@ -37,7 +39,7 @@ const SignUp = () => {
         //authenticate user
         store.dispatch(authUser());
         //redirect to profile page
-        router.push("/user/profile");
+        router.push("/");
       })
       .catch((e) => {
         console.log(e);
@@ -45,30 +47,34 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <form className="border rounded p-10 bg-gray-200" onSubmit={onFormSubmit}>
+    <>
+    <TopNav/>
+    <Container className="text-center">
       <h1 className="font-bold text-3xl text-center ">Sign Up</h1>
+      <form className="text-center" onSubmit={onFormSubmit}>
         <input
-          className="block m-3 p-1"
+          className="m-3 p-1"
           required
           type='email'
           placeholder='email'
           onChange={onEmailChange}
         ></input>
         <input
-          className="m-3 p-1 block"
+          className="m-3 p-1"
           required
           type='password'
           placeholder='password'
           onChange={onPassChange}
         ></input>
-        <button className="block m-3 mx-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type='submit'>Create Account</button>
-      <Link href='/'>
-        <a className="m-3 text-blue-500 hover:text-blue-700">Back to login</a>
-      </Link>
+        <Button variant="primary" className="m-3 mx-3 py-2 px-4 rounded">Create Account</Button>
       </form>
 
-    </div>
+      <Link href='/login'>
+          <Button variant="outline-primary" type="submit" className=" m-3">Back to login</Button>
+        </Link>
+
+    </Container>
+    </>
   );
 };
 
