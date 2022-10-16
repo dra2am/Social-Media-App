@@ -1,2 +1,2 @@
 web:node src/index.js
-web: next start
+web: npm run start
