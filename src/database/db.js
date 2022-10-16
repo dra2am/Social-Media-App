@@ -10,11 +10,17 @@ class Database
     //connect to db
     async function connectDB()
     {
+      // return await mysql.createConnection({
+      //   host: 'localhost',
+      //   user: 'root',
+      //   password: '679604',
+      //   database: 'all_curls'
+      // });
       return await mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '679604',
-        database: 'all_curls'
+        host: 'us-cdbr-east-06.cleardb.net',
+        user: 'ba3dbaf5fc8000',
+        password: '684d4ae0',
+        database: 'heroku_91b963a85e71ca7'
       });
     }
 
