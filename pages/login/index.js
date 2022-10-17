@@ -37,7 +37,7 @@ const Login = () => {
 
     // make req to server
     await axios
-      .post("http://localhost:3002/users/login", {
+      .post("https://express-backend-all-curls.herokuapp.com/users/login", {
         email: username,
         password: password,
       })

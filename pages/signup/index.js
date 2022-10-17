@@ -26,10 +26,11 @@ const SignUp = () => {
 
   //upon submission, attempt to post user to server
   const onFormSubmit = async (event) => {
+    console.log("clicked");
     event.preventDefault();
 
     await axios
-      .post("http://localhost:3002/users/signup", {
+      .post(`https://express-backend-all-curls.herokuapp.com/users/signup`, {
         email: email,
         password: pass,
       })
@@ -66,7 +67,7 @@ const SignUp = () => {
           placeholder='password'
           onChange={onPassChange}
         ></input>
-        <Button variant="primary" className="m-3 mx-3 py-2 px-4 rounded">Create Account</Button>
+        <Button variant="primary" type="submit" className="m-3 mx-3 py-2 px-4 rounded">Create Account</Button>
       </form>
 
       <Link href='/login'>
