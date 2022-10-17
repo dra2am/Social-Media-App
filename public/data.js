@@ -66,8 +66,8 @@ const products = [
     },
     {
         id: 9,
-        name: "Angel.Wash Shampoo",
-        description: "This Angel.Wash shampoo is ideal for color-treated, damaged hair.",
+        name: "Angel Wash Shampoo",
+        description: "This Angel Wash shampoo is ideal for color-treated, damaged hair.",
         img: product_9,         
         price: "34.60"
     },

@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import Product from "../../components/products/product";
-import products from "../data"
+import products from "../../public/data"
 
 const Products = () => {
     return (
