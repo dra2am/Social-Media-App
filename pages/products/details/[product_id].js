@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import Image from "next/image";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import products from "../../data";
+import products from "../../../public/data";
 import TopNav from "../../../components/TopNav";
 import SelectQuantity from "../../../components/products/select_quantity";
 import Message from "../../../components/message";
