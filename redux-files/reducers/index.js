@@ -1,21 +1,26 @@
-import { combineReducers } from "redux";
+import { ADD_TO_CART, DELETE_FROM_CART, SERVER_ACTION, CLIENT_ACTION, AUTH_USER, LOGOUT, DISPLAY_MESSAGE } from "../actions";
 import { HYDRATE } from "next-redux-wrapper";
 
-const message = (message = "", action) => {
-  if (action.type === "DISPLAY_MESSAGE") {
-      return action.payload;
+//handles pop up messages
+export const message = (message = "", action) => {
+  const { type, payload } = action;
+  if (type === DISPLAY_MESSAGE) {
+      return payload;
     }
   return message;
 }
 
-const cart = (cart = [], action) => {
-  switch (action.type) {
-    case "ADD_TO_CART": {
+//handles the state of the cart
+export const cart = (cart = [], action) => {
+  const {type, payload} = action;
+
+  switch (type) {
+    case ADD_TO_CART: {
       const { name, qty } = action.payload;
       return [...cart, {name, qty}];
     }
-    case "DELETE_FROM_CART": {
-      const name = action.payload;
+    case DELETE_FROM_CART: {
+      const name = payload;
       const arr = cart.filter(product => product.name !== name);
       return arr;
     }
@@ -25,19 +30,21 @@ const cart = (cart = [], action) => {
 }
 
 //stores profile information
-const userData = (profile = {}, action) => {
-  switch (action.type) {
+export const userData = (profile = {}, action) => {
+  const { type } = action;
+
+  switch (type) {
     case HYDRATE:
       return {
         ...profile,
         server: { ...profile.server, ...action.payload.server },
       };
-    case "SERVER_ACTION":
+    case SERVER_ACTION:
       return {
         ...profile,
         server: { ...profile.server, user: action.payload.user },
       };
-    case "CLIENT_ACTION":
+    case CLIENT_ACTION:
       return {
         ...profile,
         client: { ...profile.client, user: action.payload.user },
@@ -48,20 +55,17 @@ const userData = (profile = {}, action) => {
 };
 
 //authenticates user after good request
-const isAuth = (auth = false, action) => {
-  if (action.type === "AUTH_USER") {
-    //if action is of valid type, return true
-    return (auth = true);
-  } else if (action.type === "LOGOUT") {
-    return (auth = false);
+export const isAuth = (auth = false, action) => {
+  const { type } = action;
+
+  switch(type){
+    case AUTH_USER:
+      return auth = true
+    case LOGOUT:
+      return auth = false
+    default:
+      return auth;
   }
-  //otherwise state remains unchanged
-  return auth;
 };
 
-export const allReducers = combineReducers({
-  userData,
-  isAuth,
-  cart, 
-  message
-});
+

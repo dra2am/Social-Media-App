@@ -7,16 +7,17 @@ import products from "../../../public/data";
 import TopNav from "../../../components/TopNav";
 import SelectQuantity from "../../../components/products/select_quantity";
 import Message from "../../../components/message";
+import { addToCart, displayMessage } from "../../../redux-files/actions/index"
 
 function details() {
     const [ qty, setQty ] = useState(1);
-    const dispatch = useDispatch();
     const router = useRouter();
     const { product_id } = router.query;
     const product = products.find(product => product.id === +product_id);
+
+    //create a selector for the state
     const msg = useSelector(state => state.message);  
-    const cart = useSelector(state => state.cart);  
-    console.log("cart", cart)
+    const dispatch = useDispatch();
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -24,17 +25,9 @@ function details() {
     }
 
     const handleSubmit = () => {
-        dispatch({ 
-            type: "ADD_TO_CART", 
-            payload: {
-                name: product.name,
-                qty
-            }
-        })
-        dispatch({ 
-            type: "DISPLAY_MESSAGE", 
-            payload: `${product.name} has been added to your cart.`
-        })
+        const payload =  `${product.name} has been added to your cart.`;
+        dispatch(addToCart(product.name, qty))
+        dispatch(displayMessage(payload))
     }
 
     if (product) {
