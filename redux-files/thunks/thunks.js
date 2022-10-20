@@ -1,7 +1,5 @@
-import { useRouter } from "next/router";
+import axios from "axios";
 import { displayMessage, authUser } from "../actions";
-
-const router = useRouter();
 
 export const loginOnFormSubmit = (username, password) => async (dispatch) => {
     // make req to server
@@ -15,17 +13,13 @@ export const loginOnFormSubmit = (username, password) => async (dispatch) => {
         window.localStorage.setItem("token", res.data.token);
         //authenticate user
         dispatch(authUser());
-        //redirect to products page
-        router.push("/");
       })
       .catch((err) => {
-        const msg = "Invalid username or password"
-        dispatch(displayMessage(msg))
         console.log(err);
       });
 }
 
-export const signUpOnSubmit = (email, password) = async (dispatch) => {
+export const signUpOnSubmit = (email, password) => async (dispatch) => {
     await axios
     .post(`https://express-backend-all-curls.herokuapp.com/users/signup`, {
       email,
@@ -36,12 +30,8 @@ export const signUpOnSubmit = (email, password) = async (dispatch) => {
       window.localStorage.setItem("token", res.data.token);
       //authenticate user
       dispatch(authUser());
-      //redirect to profile page
-      router.push("/");
     })
     .catch((e) => {
-        const msg = "Error with sign up"
-        dispatch(displayMessage(msg))
         console.log(e);
     });
 }

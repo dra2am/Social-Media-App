@@ -26,7 +26,12 @@ const SignUp = () => {
   //upon submission, attempt to post user to server
   const onFormSubmit = async (event) => {
     event.preventDefault();
-    dispatch(signUpOnSubmit(email, pass));
+    try {
+      dispatch(signUpOnSubmit(email, pass));
+      router.push("/")
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (

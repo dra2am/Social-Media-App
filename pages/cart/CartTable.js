@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 
 const CartTable = () => {
     
-    const cart = useSelector(state => { cart })
+    const cart = useSelector((state) => state.cart )
 
     return (
         <Container>

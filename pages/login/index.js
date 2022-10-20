@@ -33,7 +33,12 @@ const Login = () => {
   //prevent default behavior and contact server
   const onFormSubmit = async (event) => {
     event.preventDefault();
-    dispatch(loginOnFormSubmit(username, password))
+    try {
+      dispatch(loginOnFormSubmit(username, password))
+      router.push("/")
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //for a faster transition
