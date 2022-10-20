@@ -1,9 +1,27 @@
 import React from "react";
 import Image from "next/image";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux"
+import { useState } from "react";
 import SelectQuantity from "../../../components/products/select_quantity";
+import { addToCart, displayMessage } from "../../../redux-files/actions/index"
 
-const ProductDisplay = ({img, name, description, price, handleChange, handleSubmit}) => {
+
+const ProductDisplay = ({img, name, description, price}) => {
+    const [ qty, setQty ] = useState(1);
+    const dispatch = useDispatch();
+
+    const handleChange = (e) => {
+        e.preventDefault();
+        setQty(e.target.value);
+    }
+
+    const handleSubmit = () => {
+        const payload =  `${name} has been added to your cart.`;
+        dispatch(addToCart(name, qty))
+        dispatch(displayMessage(payload))
+    }
+
     return (
         <Container>
         <Button variant="link" href="/">Back to Products</Button>
@@ -32,7 +50,7 @@ const ProductDisplay = ({img, name, description, price, handleChange, handleSubm
                 <Row>
                     <Col className="d-flex align-items-center">
                         <SelectQuantity handleChange={handleChange} />
-                        <Button variant="primary" onClick={handleSubmit}>Add to Cart</Button>
+                        <Button variant="primary" onClick={() => handleSubmit()}>Add to Cart</Button>
                     </Col>
                 </Row>
             </Col>
