@@ -8,7 +8,6 @@ function details() {
     const router = useRouter();
     const { product_id } = router.query;
     const product = products.find(product => product.id === +product_id);
-
     const msg = useSelector(state => state.message);  
 
     if (product) {

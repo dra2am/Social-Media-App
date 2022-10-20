@@ -11,6 +11,7 @@
     "start": "next start -p $PORT"
   },
   "dependencies": {
+    "@babel/runtime": "^7.19.4",
     "axios": "^0.20.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -28,11 +29,14 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1",
     "sass": "^1.50.1",
     "uuid": "^8.3.2",
     "validator": "^13.1.1"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.19.6",
     "@fullhuman/postcss-purgecss": "^3.0.0",
     "postcss-preset-env": "^6.7.0"
   }

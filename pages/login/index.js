@@ -2,11 +2,10 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { useStore } from "react-redux";
-import { authUser } from "../../redux-files/actions/index";
+import { useDispatch } from "react-redux";
 import { Container, Button } from 'react-bootstrap';
 import TopNav from "../../components/TopNav";
+import { loginOnFormSubmit } from "../../redux-files/thunks/thunks"
 
 // import styles from "../styles/Home.module.css";
 
@@ -18,8 +17,8 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  //access store
-  const store = useStore();
+  //dispatch hook
+  const dispatch = useDispatch();
 
   //get input from username
   const onUsernameChange = (event) => {
@@ -34,24 +33,7 @@ const Login = () => {
   //prevent default behavior and contact server
   const onFormSubmit = async (event) => {
     event.preventDefault();
-
-    // make req to server
-    await axios
-      .post("https://express-backend-all-curls.herokuapp.com/users/login", {
-        email: username,
-        password: password,
-      })
-      .then((res) => {
-        //store token in local storage
-        window.localStorage.setItem("token", res.data.token);
-        //authenticate user
-        store.dispatch(authUser());
-        //redirect to products page
-        router.push("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(loginOnFormSubmit(username, password))
   };
 
   //for a faster transition

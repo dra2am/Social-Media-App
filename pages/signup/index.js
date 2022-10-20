@@ -1,20 +1,19 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/router";
-import { useStore } from "react-redux";
-import { authUser } from "../../redux-files/actions";
 import { Container, Button } from 'react-bootstrap';
 import TopNav from "../../components/TopNav";
+import { useDispatch } from "react-redux";
+import { signUpOnSubmit } from "../../redux-files/thunks/thunks";
 
 const SignUp = () => {
   //store the state of inputs
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
-  //use redux store and next router
-  const store = useStore();
+  //use next router + dispatch
   const router = useRouter();
+  const dispatch = useDispatch()
 
   //upon change of each input, store the value
   const onEmailChange = (event) => {
@@ -26,25 +25,8 @@ const SignUp = () => {
 
   //upon submission, attempt to post user to server
   const onFormSubmit = async (event) => {
-    console.log("clicked");
     event.preventDefault();
-
-    await axios
-      .post(`https://express-backend-all-curls.herokuapp.com/users/signup`, {
-        email: email,
-        password: pass,
-      })
-      .then((res) => {
-        //store token in local storage
-        window.localStorage.setItem("token", res.data.token);
-        //authenticate user
-        store.dispatch(authUser());
-        //redirect to profile page
-        router.push("/");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    dispatch(signUpOnSubmit(email, pass));
   };
 
   return (
