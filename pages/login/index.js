@@ -34,7 +34,7 @@ const Login = () => {
   const onFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      dispatch(loginOnFormSubmit(username, password))
+      await dispatch(loginOnFormSubmit(username, password))
       router.push("/")
     } catch (error) {
       console.log(error);
