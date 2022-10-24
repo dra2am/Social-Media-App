@@ -1,4 +1,4 @@
-import { ADD_TO_CART, DELETE_FROM_CART, SERVER_ACTION, CLIENT_ACTION, AUTH_USER, LOGOUT, DISPLAY_MESSAGE } from "../actions";
+import { ADD_TO_CART, DELETE_FROM_CART, SERVER_ACTION, AUTH_USER, LOGOUT, DISPLAY_MESSAGE } from "../actions";
 import { HYDRATE } from "next-redux-wrapper";
 
 //handles pop up messages
@@ -31,24 +31,18 @@ export const cart = (cart = [], action) => {
 
 //stores profile information
 export const userData = (profile = {}, action) => {
-  const { type } = action;
+  const { type, payload } = action;
 
   switch (type) {
     case HYDRATE:
       return {
         ...profile,
-        server: { ...profile.server, ...action.payload.server },
+        server: { ...profile.server, ...payload.server },
       };
     case SERVER_ACTION:
-      return {
-        ...profile,
-        server: { ...profile.server, user: action.payload.user },
-      };
-    case CLIENT_ACTION:
-      return {
-        ...profile,
-        client: { ...profile.client, user: action.payload.user },
-      };
+      return payload;
+    case LOGOUT:
+      return payload;
     default:
       return profile;
   }

@@ -27,16 +27,6 @@ export const userDataServer = (user) => {
   };
 };
 
-export const CLIENT_ACTION = "CLIENT_ACTION"
-export const userDataClient = (user) => {
-  return {
-    type: CLIENT_ACTION,
-    payload: {
-      user,
-    },
-  };
-};
-
 export const AUTH_USER = "AUTH_USER"
 export const authUser = () => {
   return {
@@ -48,6 +38,9 @@ export const LOGOUT = "LOGOUT"
 export const logout = () => {
   return {
     type: LOGOUT,
+    payload: {
+      user: {}
+    }
   };
 };
 
