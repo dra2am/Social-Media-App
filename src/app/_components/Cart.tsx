@@ -1,10 +1,15 @@
+import { ShoppingBagIcon } from '@heroicons/react/24/outline'
 export const Cart = () => {
     return <>
-        <label htmlFor="items">Cart</label>
-        <select name="items" id="items">
-            <option value="1">Will loop through redux cart state</option>
-            <option value="1">Which is updated when a new item/quantity is added</option>
-            <option value="1">So yeah</option>
-        </select>
+                <div className="ml-4 flow-root lg:ml-6">
+                  <a href="#" className="group -m-2 flex items-center p-2">
+                    <ShoppingBagIcon
+                      aria-hidden="true"
+                      className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
+                    />
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                    <span className="sr-only">items in cart, view bag</span>
+                  </a>
+                </div>
     </>
 }
