@@ -1,16 +1,38 @@
 'use client'
 import Link from 'next/link'
 import { Cart } from './Cart'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Dialog,
   DialogBackdrop,
   DialogPanel
 } from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, MagnifyingGlassIcon, XMarkIcon, UserCircleIcon } from '@heroicons/react/24/outline'
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../../../firebase.config'
+import { signOut } from "firebase/auth";
 
 export const TopNav =()=> {
-  const [open, setOpen] = useState(false)
+
+  const [open, setOpen] = useState<boolean>(false);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [user, setUser] = useState<string | null>();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user)=> {
+      if(user){
+        setIsAuth(true);
+        setUser(user.email);
+      } else {
+        setIsAuth(false);
+        setUser(null);
+      }
+    });
+  }, []);
+
+  const onLogout = () => {
+      signOut(auth);
+  }
 
   return (
     <div className="bg-white">
@@ -95,9 +117,19 @@ export const TopNav =()=> {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                    <Link className="text-sm font-medium text-gray-700 hover:text-gray-800" href="/login">Login</Link>
-                    <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                    <Link className="text-sm font-medium text-gray-700 hover:text-gray-800" href="/login">Create account</Link>
+                  { //could put this logic in its own component...
+                    isAuth ? 
+                    <>             
+                    <span className="text-sm font-medium text-gray-400"> {user} </span>
+                    <Link href="/" onClick={onLogout} className="text-sm font-medium text-gray-700 hover:text-gray-800">Logout</Link>
+                    </>
+                    : 
+                    <>
+                      <Link className="text-sm font-medium text-gray-700 hover:text-gray-800" href="/login">Login</Link>
+                      <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
+                      <Link className="text-sm font-medium text-gray-700 hover:text-gray-800" href="/createAccount">Create account</Link>
+                    </>
+                  }     
                 </div>
 
                 {/* Search - will be own component? */}
