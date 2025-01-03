@@ -7,12 +7,14 @@ import {
   DialogBackdrop,
   DialogPanel
 } from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, XMarkIcon, UserCircleIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../../../firebase.config'
 import { signOut } from "firebase/auth";
+import { PassReducerInterface } from 'page'
 
-export const TopNav =()=> {
+
+export const TopNav =( props : PassReducerInterface)=> {
 
   const [open, setOpen] = useState<boolean>(false);
   const [isAuth, setIsAuth] = useState<boolean>(false);
@@ -43,6 +45,7 @@ export const TopNav =()=> {
           className="fixed inset-0 bg-black/25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
         />
 
+        {/* Mobile - side panel */}
         <div className="fixed inset-0 z-40 flex">
           <DialogPanel
             transition
@@ -60,32 +63,25 @@ export const TopNav =()=> {
               </button>
             </div>
 
-            {/* Links */}
-
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-              <div className="flow-root">
-                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                  Sign in
-                </a>
-              </div>
-              <div className="flow-root">
-                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                  Create account
-                </a>
-              </div>
+            { //could put this logic in its own component...
+                    isAuth ? 
+                    <div className='flow-root'>             
+                      <span className="text-sm font-medium text-gray-400"> {user} </span>
+                      <Link href="/" onClick={onLogout} className="text-sm font-medium text-gray-700 hover:text-gray-800">Logout</Link>
+                    </div>
+                    : 
+                    <>
+                      <div className='flow-root'>
+                        <Link className="text-sm font-medium text-gray-700 hover:text-gray-800" href="/login">Login</Link>
+                      </div>
+                      <div className='flow-root'>
+                        <Link className="text-sm font-medium text-gray-700 hover:text-gray-800" href="/createAccount">Create account</Link>
+                      </div>
+                    </>
+                  }     
             </div>
 
-            <div className="border-t border-gray-200 px-4 py-6">
-              <a href="#" className="-m-2 flex items-center p-2">
-                <img
-                  alt=""
-                  src="https://tailwindui.com/plus/img/flags/flag-canada.svg"
-                  className="block h-auto w-5 shrink-0"
-                />
-                <span className="ml-3 block text-base font-medium text-gray-900">CAD</span>
-                <span className="sr-only">, change currency</span>
-              </a>
-            </div>
           </DialogPanel>
         </div>
       </Dialog>
@@ -141,7 +137,7 @@ export const TopNav =()=> {
                 </div>
 
                 {/* Cart */}
-                <Cart />
+                <Cart {...props} />
               </div>
             </div>
           </div>

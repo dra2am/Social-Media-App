@@ -4,10 +4,11 @@
 // for state that may be null --> const [user, setUser] = useState<User | null>(null);
 
 //for mocking purposes products are in file, realistically would be fetched from blob storage
+import { PassReducerInterface } from "page"
 import products from "../../../../public/data/data"
-import { ProductCard } from "./ProductCard"
+import { ProductCard, ProductCardInterface } from "./ProductCard"
 
-export const Products = () => {
+export const Products = (props : PassReducerInterface) => {
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -18,7 +19,14 @@ export const Products = () => {
                 {products.map(product => {
                     return (
                         <div key={product.id}>                        
-                            <ProductCard {...product} />
+                            <ProductCard 
+                                id={product.id}
+                                name={product.name}
+                                description={product.description}
+                                img={product.img}
+                                price={product.price}
+                                dispatchAddItems={props.dispatchAddItems} 
+                            />
                         </div>
                     )
                 })}

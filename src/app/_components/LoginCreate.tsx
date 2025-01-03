@@ -6,11 +6,7 @@ import { auth } from "../../../firebase.config"
 import { useRouter } from 'next/navigation'
 import Link from 'next/link' 
 
-export interface LoginCreateInterface  {
-    isCreateAcc : boolean
-}
-
-export const LoginCreate = ({isCreateAcc}: LoginCreateInterface) => {
+export const LoginCreate = ({isCreateAcc}: {isCreateAcc : boolean}) => {
 
     const [userName, setUserName] = useState<string>("");
     const [pass, setPass] = useState<string>("");

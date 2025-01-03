@@ -76,8 +76,8 @@ const products : ProductCardInterface[] = [
     },
     {
         id: 10,
-        name: "Angel Wash Shampoo",
-        description: "This Angel Wash shampoo is ideal for color-treated, damaged hair.",
+        name: "All Curls Shampoo",
+        description: "All Curls Shampoo is ideal for curls of all size shapes and colors.",
         img: product_10,         
         price: "34.60"
     },    
