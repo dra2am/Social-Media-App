@@ -1,9 +1,8 @@
 "use client"
 import { StaticImageData } from "next/image";
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, MouseEventHandler } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { PassReducerInterface } from "page";
 
 export interface ProductCardInterface  {
     id: number,
@@ -11,21 +10,23 @@ export interface ProductCardInterface  {
     description : string,
     img : StaticImageData,
     price: string,
+    qty?: number,
     dispatchAddItems?: (payload: ProductCardInterface) => void
+    dispatchUpdateQty?: (payload: ProductCardInterface) => void
 }
 
 //reducer contains {function to update item state}
-export const ProductCard = ({ name, img, price, id, description, dispatchAddItems } : ProductCardInterface) => {
+export const ProductCard = ({ name, img, price, id, description, dispatchAddItems, dispatchUpdateQty } : ProductCardInterface) => {
     const [open, setOpen] = useState(false);
-
-    const onFormSubmit = (event: FormEvent<HTMLFormElement>) =>{
-        event.preventDefault();
-
+    //update qty here in the future
+    const onButtonClick: MouseEventHandler<HTMLButtonElement> = (event, qty : number = 0) =>{
         if(dispatchAddItems != undefined){
-            dispatchAddItems({name, img, price, id, description})
+            dispatchAddItems({name, img, price, id, description, qty})
         }
-
-        console.log(`Added item of id ${id} to cart`)
+        
+        if(dispatchUpdateQty != undefined){
+            dispatchUpdateQty({name, img, price, id, description, qty})
+        }
     }
 
     return (
@@ -73,14 +74,13 @@ export const ProductCard = ({ name, img, price, id, description, dispatchAddItem
                                 </h3>
                                 <p className="text-xl text-gray-700">{description}</p>
 
-                                <form onSubmit={onFormSubmit}>
                                 <button
+                                    onClick={onButtonClick}
                                     type="submit"
                                     className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-orange-200 px-8 py-3 text-base font-medium text-orange-800 hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2"
                                 >
                                     Add to bag
                                 </button>
-                                </form>
                             </section>
                             </div>
                         </div>

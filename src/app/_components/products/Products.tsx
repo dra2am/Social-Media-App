@@ -6,7 +6,7 @@
 //for mocking purposes products are in file, realistically would be fetched from blob storage
 import { PassReducerInterface } from "page"
 import products from "../../../../public/data/data"
-import { ProductCard, ProductCardInterface } from "./ProductCard"
+import { ProductCard } from "./ProductCard"
 
 export const Products = (props : PassReducerInterface) => {
     return (
@@ -26,6 +26,7 @@ export const Products = (props : PassReducerInterface) => {
                                 img={product.img}
                                 price={product.price}
                                 dispatchAddItems={props.dispatchAddItems} 
+                                dispatchUpdateQty = {props.dispatchUpdateQty}
                             />
                         </div>
                     )

@@ -8,11 +8,65 @@ import { ProductCardInterface } from "_components/products/ProductCard";
 export interface PassReducerInterface {
   itemsState? : ProductCardInterface[],
   dispatchAddItems?: (payload: ProductCardInterface)=>void,
-  dispatchRemoveItems?:(payload: ProductCardInterface)=>void
+  dispatchRemoveItems?:(payload: ProductCardInterface)=>void,
+  dispatchUpdateQty?:(payload: ProductCardInterface)=>void
+}
+
+const initialItems: ProductCardInterface[] = [];
+
+enum ItemsActions {
+  AddToCart = "Add",
+  RemoveFromCart = "Remove",
+  UpdateQty = "Update"
+}
+
+interface ItemsActionInterface {
+  type: ItemsActions,
+  payload : ProductCardInterface
+}
+
+export const itemsReducer = (state : ProductCardInterface[], action:ItemsActionInterface) => {
+  const {type, payload} = action;
+  console.log(`Action Type: ${type}, Item ID: ${payload.id}, Current Qty: ${payload.qty}`);  //can confirm called once
+  switch (type) {
+    case (ItemsActions.AddToCart): { 
+      console.log(`....Adding item ${payload.id}`) //can confirm called once
+      const isInCart = state.find( x => x.id === payload.id)
+      if(isInCart == undefined){
+        return [
+          ...state,
+          payload
+        ]
+      }
+    } 
+
+    case (ItemsActions.UpdateQty): {
+      console.log(`....Updating item ${payload.id}`)  //can confirm called once
+      return state.map(x => {
+          if(x.id === payload.id){
+             return {
+              ...x,
+              qty : (x.qty || 0) + 1 
+             }
+          } 
+          return x
+        })
+    }
+    
+    case (ItemsActions.RemoveFromCart):{   
+      return state.filter(x => x.id == payload.id)
+      
+    }
+    default: {
+      return state;
+    }
+  }
 }
 
 export default function Home() {
+
   const [ items, dispatch ] = useReducer(itemsReducer, initialItems)
+
   const dispatchAddItems = (payload : ProductCardInterface) => {
     dispatch({
       type: ItemsActions.AddToCart,
@@ -27,13 +81,21 @@ export default function Home() {
     })
   }
 
+  const dispatchUpdateQty = (payload : ProductCardInterface) => {
+    dispatch({
+      type: ItemsActions.UpdateQty,
+      payload
+    })
+  }
+
   const passToNav : PassReducerInterface = {
     itemsState: items,
     dispatchRemoveItems: dispatchRemoveItems
   }
 
   const passToProducts : PassReducerInterface = {
-    dispatchAddItems: dispatchAddItems
+    dispatchAddItems: dispatchAddItems,
+    dispatchUpdateQty : dispatchUpdateQty
   }
 
   return (
@@ -42,35 +104,4 @@ export default function Home() {
         <Products {...passToProducts}></Products>
     </>
   );
-}
-
-const initialItems: ProductCardInterface[] = [];
-
-enum ItemsActions {
-  AddToCart = "Add",
-  RemoveFromCart = "Remove"
-}
-interface ItemsActionInterface {
-  type: ItemsActions,
-  payload : ProductCardInterface
-}
-
-export const itemsReducer = (state : ProductCardInterface[], action:ItemsActionInterface) => {
-  const {type, payload} = action;
-  switch (type) {
-    case ItemsActions.AddToCart:{ 
-      return [
-        ...state,
-        payload
-      ]
-    }
-    case ItemsActions.RemoveFromCart:{      
-      return [
-        ...state.filter(x => x.id == payload.id)
-      ]
-    }
-    default: {
-      return state;
-    }
-  }
 }
