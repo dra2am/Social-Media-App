@@ -2,7 +2,7 @@ import { ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { PassReducerInterface } from 'page'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { useState } from 'react'
+import { MouseEventHandler, useState } from 'react'
 
 
 export const Cart = ({itemsState, dispatchRemoveItems} : PassReducerInterface) => {
@@ -13,6 +13,13 @@ export const Cart = ({itemsState, dispatchRemoveItems} : PassReducerInterface) =
       count = count + x.qty
     }
   })
+
+  const onRemoveClicked: MouseEventHandler<HTMLButtonElement> = (event) =>{
+    let id = Number.parseInt(event.currentTarget.value)
+    if(dispatchRemoveItems){
+      dispatchRemoveItems(id)
+    }
+  }
 
     return <>
               <Dialog open={open} onClose={setOpen} className="relative z-10">
@@ -71,7 +78,7 @@ export const Cart = ({itemsState, dispatchRemoveItems} : PassReducerInterface) =
 
                                             <div className="flex">
                                               {/* remove button should call dispatch */}
-                                              <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                              <button value={item.id} onClick={onRemoveClicked} type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
                                                 Remove
                                               </button>
                                             </div>

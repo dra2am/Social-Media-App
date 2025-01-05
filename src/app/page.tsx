@@ -8,7 +8,7 @@ import { ProductCardInterface } from "_components/products/ProductCard";
 export interface PassReducerInterface {
   itemsState? : ProductCardInterface[],
   dispatchAddItems?: (payload: ProductCardInterface)=>void,
-  dispatchRemoveItems?:(payload: ProductCardInterface)=>void,
+  dispatchRemoveItems?:(payload: number)=>void,
   dispatchUpdateQty?:(payload: ProductCardInterface)=>void
 }
 
@@ -22,41 +22,42 @@ enum ItemsActions {
 
 interface ItemsActionInterface {
   type: ItemsActions,
-  payload : ProductCardInterface
+  payload : ProductCardInterface | number
 }
 
 export const itemsReducer = (state : ProductCardInterface[], action:ItemsActionInterface) => {
   const {type, payload} = action;
-  console.log(`Action Type: ${type}, Item ID: ${payload.id}, Current Qty: ${payload.qty}`);  //can confirm called once
+  
+  if (typeof payload !== 'number') {
+  }
+
   switch (type) {
     case (ItemsActions.AddToCart): { 
-      console.log(`....Adding item ${payload.id}`) //can confirm called once
-      const isInCart = state.find( x => x.id === payload.id)
-      if(isInCart == undefined){
-        return [
-          ...state,
-          payload
-        ]
+      if (typeof payload !== 'number') {
+        const isInCart = state.find( x => x.id === payload.id)
+        if(isInCart == undefined){
+          return [
+            ...state,
+            payload
+          ]
+        } else {
+          return [
+            ...state.map(x => {
+              if(x.id == payload.id){
+                return payload
+              } else {
+                return x
+              }
+            })
+          ]
+        }
       }
     } 
-
-    case (ItemsActions.UpdateQty): {
-      console.log(`....Updating item ${payload.id}`)  //can confirm called once
-      return state.map(x => {
-          if(x.id === payload.id){
-             return {
-              ...x,
-              qty : (x.qty || 0) + 1 
-             }
-          } 
-          return x
-        })
-    }
     
-    case (ItemsActions.RemoveFromCart):{   
-      return state.filter(x => x.id == payload.id)
-      
+    case (ItemsActions.RemoveFromCart):{  
+      return state.filter(x => x.id == payload)
     }
+
     default: {
       return state;
     }
@@ -74,7 +75,7 @@ export default function Home() {
     })
   }
 
-  const dispatchRemoveItems = (payload : ProductCardInterface) => {
+  const dispatchRemoveItems = (payload : number) => {
     dispatch({
       type: ItemsActions.RemoveFromCart,
       payload

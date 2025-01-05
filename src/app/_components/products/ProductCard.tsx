@@ -1,6 +1,6 @@
 "use client"
 import { StaticImageData } from "next/image";
-import { useState, FormEvent, MouseEventHandler } from "react";
+import { useState, FormEvent, MouseEventHandler, ChangeEventHandler } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -18,15 +18,20 @@ export interface ProductCardInterface  {
 //reducer contains {function to update item state}
 export const ProductCard = ({ name, img, price, id, description, dispatchAddItems, dispatchUpdateQty } : ProductCardInterface) => {
     const [open, setOpen] = useState(false);
-    //update qty here in the future
-    const onButtonClick: MouseEventHandler<HTMLButtonElement> = (event, qty : number = 0) =>{
+    const [quantity, setQuantity] = useState<number>(1);
+
+    const onQtyChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
+        let qty : number = Number.parseInt(event.currentTarget.value) 
+        setQuantity(qty)
+    }
+
+    const onButtonClick: MouseEventHandler<HTMLButtonElement> = () =>{
+        let qty = quantity
+        console.log("Adding item "+name+" of quantity "+qty)
         if(dispatchAddItems != undefined){
             dispatchAddItems({name, img, price, id, description, qty})
         }
         
-        if(dispatchUpdateQty != undefined){
-            dispatchUpdateQty({name, img, price, id, description, qty})
-        }
     }
 
     return (
@@ -69,15 +74,16 @@ export const ProductCard = ({ name, img, price, id, description, dispatchAddItem
                             </section>
 
                             <section aria-labelledby="description-heading" className="mt-10">
-                                <h3 id="description-heading" className="sr-only">
-                                Product Description
-                                </h3>
                                 <p className="text-xl text-gray-700">{description}</p>
-
+                                <select value={quantity} onChange={onQtyChange} name="quantity" id="qty" className="mt-10 border rounded border-gray-300 py-2 mx-2 w-16">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
                                 <button
                                     onClick={onButtonClick}
                                     type="submit"
-                                    className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-orange-200 px-8 py-3 text-base font-medium text-orange-800 hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2"
+                                    className="mt-6 w-full items-center justify-center rounded-md border border-transparent bg-orange-200 px-8 py-3 text-base font-medium text-orange-800 hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2"
                                 >
                                     Add to bag
                                 </button>
