@@ -8,9 +8,11 @@ import { MouseEventHandler, useState } from 'react'
 export const Cart = ({itemsState, dispatchRemoveItems} : PassReducerInterface) => {
   const [open, setOpen] = useState(false)
   let count = 0
+  let price = 0
   itemsState?.forEach(x => {
-    if(x.qty){
+    if(x.qty && x.price){
       count = count + x.qty
+      price = price + (x.qty * Number.parseInt(x.price))
     }
   })
 
@@ -95,7 +97,7 @@ export const Cart = ({itemsState, dispatchRemoveItems} : PassReducerInterface) =
                               <div className="flex justify-between text-base font-medium text-gray-900">
                                 {/* subtotal is additional of all prices */}
                                 <p>Subtotal</p>
-                                <p>$262.00</p>
+                                <p>${price}.00</p>
                               </div>
                               <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                               <div className="mt-6">
