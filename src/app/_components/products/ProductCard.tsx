@@ -1,6 +1,6 @@
 "use client"
-import { StaticImageData } from "next/image";
-import { useState, FormEvent, MouseEventHandler, ChangeEventHandler } from "react";
+import Image, { StaticImageData } from "next/image";
+import { useState, MouseEventHandler, ChangeEventHandler } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -12,21 +12,20 @@ export interface ProductCardInterface  {
     price: string,
     qty?: number,
     dispatchAddItems?: (payload: ProductCardInterface) => void
-    dispatchUpdateQty?: (payload: ProductCardInterface) => void
 }
 
 //reducer contains {function to update item state}
-export const ProductCard = ({ name, img, price, id, description, dispatchAddItems, dispatchUpdateQty } : ProductCardInterface) => {
+export const ProductCard = ({ name, img, price, id, description, dispatchAddItems } : ProductCardInterface) => {
     const [open, setOpen] = useState(false);
     const [quantity, setQuantity] = useState<number>(1);
 
     const onQtyChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-        let qty : number = Number.parseInt(event.currentTarget.value) 
+        const qty : number = Number.parseInt(event.currentTarget.value) 
         setQuantity(qty)
     }
 
     const onButtonClick: MouseEventHandler<HTMLButtonElement> = () =>{
-        let qty = quantity
+        const qty = quantity
         console.log("Adding item "+name+" of quantity "+qty)
         if(dispatchAddItems != undefined){
             dispatchAddItems({name, img, price, id, description, qty})
@@ -59,7 +58,10 @@ export const ProductCard = ({ name, img, price, id, description, dispatchAddItem
                         </button>
 
                         <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
-                            <img
+                            <Image
+                            width={500}
+                            height={500}
+                            alt=''
                             src={img.src}
                             className="aspect-[2/3] w-full rounded-lg bg-gray-100 object-cover sm:col-span-4 lg:col-span-5"
                             />
@@ -97,7 +99,10 @@ export const ProductCard = ({ name, img, price, id, description, dispatchAddItem
             </Dialog>
 
             <div id={"product"+id} onClick={() => setOpen(true)}>
-                <img
+                <Image
+                width={500}
+                height={500}
+                alt=''
                 src={img.src}
                 className="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]"
                 />

@@ -7,7 +7,7 @@ import {
   DialogBackdrop,
   DialogPanel
 } from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../../../firebase.config'
 import { signOut } from "firebase/auth";
@@ -129,12 +129,12 @@ export const TopNav =( props : PassReducerInterface)=> {
                 </div>
 
                 {/* Search - will be own component? */}
-                <div className="flex lg:ml-6">
+                {/* <div className="flex lg:ml-6">
                   <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
                     <span className="sr-only">Search</span>
                     <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
                   </a>
-                </div>
+                </div> */}
 
                 {/* Cart */}
                 <Cart {...props} />

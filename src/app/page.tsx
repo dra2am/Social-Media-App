@@ -1,5 +1,5 @@
 "use client"
-import styles from "./page.module.css";
+import "./page.module.css";
 import { TopNav } from "./_components/TopNav" ;
 import { Products } from "./_components/products/Products"
 import { useReducer } from 'react'
@@ -9,7 +9,6 @@ export interface PassReducerInterface {
   itemsState? : ProductCardInterface[],
   dispatchAddItems?: (payload: ProductCardInterface)=>void,
   dispatchRemoveItems?:(payload: number)=>void,
-  dispatchUpdateQty?:(payload: ProductCardInterface)=>void
 }
 
 const initialItems: ProductCardInterface[] = [];
@@ -25,7 +24,7 @@ interface ItemsActionInterface {
   payload : ProductCardInterface | number
 }
 
-export const itemsReducer = (state : ProductCardInterface[], action:ItemsActionInterface) => {
+const itemsReducer = (state: ProductCardInterface[], action: ItemsActionInterface): ProductCardInterface[] => {
   const {type, payload} = action;
   
   if (typeof payload !== 'number') {
@@ -82,13 +81,6 @@ export default function Home() {
     })
   }
 
-  const dispatchUpdateQty = (payload : ProductCardInterface) => {
-    dispatch({
-      type: ItemsActions.UpdateQty,
-      payload
-    })
-  }
-
   const passToNav : PassReducerInterface = {
     itemsState: items,
     dispatchRemoveItems: dispatchRemoveItems
@@ -96,7 +88,6 @@ export default function Home() {
 
   const passToProducts : PassReducerInterface = {
     dispatchAddItems: dispatchAddItems,
-    dispatchUpdateQty : dispatchUpdateQty
   }
 
   return (

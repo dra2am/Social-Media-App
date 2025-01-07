@@ -3,6 +3,7 @@ import { PassReducerInterface } from 'page'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { MouseEventHandler, useState } from 'react'
+import Image from 'next/image'
 
 
 export const Cart = ({itemsState, dispatchRemoveItems} : PassReducerInterface) => {
@@ -17,7 +18,7 @@ export const Cart = ({itemsState, dispatchRemoveItems} : PassReducerInterface) =
   })
 
   const onRemoveClicked: MouseEventHandler<HTMLButtonElement> = (event) =>{
-    let id = Number.parseInt(event.currentTarget.value)
+    const id = Number.parseInt(event.currentTarget.value)
     if(dispatchRemoveItems){
       dispatchRemoveItems(id)
     }
@@ -63,7 +64,7 @@ export const Cart = ({itemsState, dispatchRemoveItems} : PassReducerInterface) =
                                     itemsState?.map((item) => (
                                       <li key={item.id} className="flex py-6">
                                         <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                          <img src={item.img.src} className="size-full object-cover" />
+                                          <Image width={500} height={500} alt='' src={item.img.src} className="size-full object-cover" />
                                         </div>
 
                                         <div className="ml-4 flex flex-1 flex-col">

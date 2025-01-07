@@ -105,7 +105,7 @@ export const LoginCreate = ({isCreateAcc}: {isCreateAcc : boolean}) => {
           </form>
         { isCreateAcc ? "" : 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Don't have an account yet? {' '}
+            Dont have an account yet?
             <Link href="/createAccount">
               <span className="font-semibold text-indigo-600 hover:text-indigo-500">
                 Create New Account

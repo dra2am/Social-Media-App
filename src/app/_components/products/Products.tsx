@@ -26,7 +26,6 @@ export const Products = (props : PassReducerInterface) => {
                                 img={product.img}
                                 price={product.price}
                                 dispatchAddItems={props.dispatchAddItems} 
-                                dispatchUpdateQty = {props.dispatchUpdateQty}
                             />
                         </div>
                     )
